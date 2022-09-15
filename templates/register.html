@@ -1,0 +1,26 @@
+{% extends "template.html" %}
+
+{% block content %}
+    </br>
+    <h2 style="text-align:center">Create an Account to Earn Reward Points with Every Order!</h2>
+    </br>
+    <div class="shadow p-3 mb-5 bg-body rounded" id="register">
+        <form method="POST">
+            {{ register.hidden_tag() }}
+
+            {{ register.email.label(class="form-label") }}
+            {{ register.email(class="form-control")}}
+            <br/>
+            {{ register.password.label(class="form-label") }}
+            {{ register.password(class="form-control") }}
+            <br/>
+            {{ register.confirmation.label(class="form-label") }}
+            {{ register.confirmation(class="form-control") }}
+            <br/>
+            {{ register.submit(class="btn btn-secondary") }}
+        </form>
+    </div>
+
+    <p style="text-align:center">Already have an account? <a href="{{url_for('login')}}">Click Here</a> to Log In.</p>
+
+{% endblock %}

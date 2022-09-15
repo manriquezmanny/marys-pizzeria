@@ -1,0 +1,69 @@
+h1{
+    font-weight:bold;
+    font-size:30px;
+}
+
+#indexpizza{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    max-width: 84%;
+    max-height: 84%;
+    display:block;
+}
+
+#banner{
+    margin-left: 100px;
+    margin-right: 100px;
+    padding-top: 15px;
+    font-weight: bold;
+}
+
+#bannerlogo{
+    font-family: "Brush Script MT", cursive;
+}
+.left{
+    float: left;
+    width: 33.33333%;
+    text-align:left;
+}
+
+.center{
+    float: left;
+    width: 33.33333%;
+    text-align:center;
+}
+
+.right{
+    float: left;
+    width: 33.33333%;
+    text-align:right;
+}
+
+#login{
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#register{
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.itemimage{
+    max-width:50%;
+}
+
+.itemform{ 
+    width:40%;
+    text-align:center;
+    float:right;
+    margin-right:5%;
+    font-size: 25px;
+}
+
+#logo{
+    font-family: "Brush Script MT";
+}

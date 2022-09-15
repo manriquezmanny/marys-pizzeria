@@ -1,0 +1,21 @@
+{% extends "template.html" %}
+
+{% block content %}
+    </br>
+    <h2 style="text-align:center">Log In to Access your Account!</h2>
+    <br/>
+    <div class="shadow p-3 mb-5 bg-body rounded" id="login">
+        {{ login.hidden_tag() }}
+
+        {{ login.email.label(class="form-label") }}
+        {{ login.email(class="form-control") }}
+        <br/>
+        {{ login.password.label(class="form-label") }}
+        {{ login.password(class="form-control") }}
+        <br/>
+        {{ login.submit(class="btn btn-secondary") }}
+    </div>
+    
+    <p style="text-align:center">Don't have an account? <a href="{{url_for('register')}}">Click Here</a> to make an Account.</p>
+
+{% endblock %}

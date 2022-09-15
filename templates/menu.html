@@ -1,0 +1,19 @@
+{% extends "template.html" %}
+
+{% block content %}
+<br/>
+    {% for item in MENU %}
+        <div class="shadow p-3 mb-5 bg-body rounded">
+            <img class=itemimage src="static/images/{{item}}.jpg">
+            <div class="itemform">
+                <br/>
+                <h4>{{ MENU[item].text }}</h4>
+                <br/>
+                <p>{{ MENU[item].description }}</p>
+                <br/>
+                {{ order.submit(class="btn btn-secondary") }}
+            </div>
+        </div>
+    {% endfor %}
+
+{% endblock %}

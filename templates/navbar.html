@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" id="logo" href="{{ url_for('index') }}">Mary's Pizzeria</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{ url_for('menu') }}">Menu</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{ url_for('rewards') }}">My Rewards</a>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="nav-item">
+            <a class="nav-link active" href="{{ url_for('register') }}">Create Account</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="{{ url_for('login') }}">Log In</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="{{ url_for('checkout') }}">Checkout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
