@@ -7,13 +7,14 @@ from datetime import datetime
 from dotenv import load_dotenv
 import os
 
+
 # Creating Flask app.
 app = Flask(__name__)
+
 
 # Getting and setting secret key and ensuring it isn't pushed to github by using dotenv and .gitignore
 load_dotenv()
 app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
-
 # Adding Database
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///maryspizza.db"
 # Initializing Database
@@ -23,15 +24,21 @@ db = SQLAlchemy(app)
 # Creating Database Models (i.e tables using sqlalchemy)
 class Accounts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(50), nullable=False, unique=True)
+    email = db.Column(db.String(80), nullable=False, unique=True)
     password = db.Column(db.String, nullable=False)
     points = db.Column(db.Integer, default=0, nullable=False)
+    #Creating a dunder repr function to return a string if the class is printed or returned.
+    def __repr__(self):
+        return "<Email %r>" % self.email
 
 class Orders(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     customer_id = db.Column(db.Integer)
-    email = db.Column(db.String(50), nullable=False)
+    email = db.Column(db.String(80), nullable=False)
     date_time = db.Column(db.DateTime, default=datetime.utcnow)
+    #Creating dunder repr function for Orders
+    def __repr__(self):
+        return "<Order at: %r>" % self.date_time
 
 
 # Creating Form Classes using wtforms
@@ -50,7 +57,7 @@ class AddToOrder(FlaskForm):
     submit = SubmitField("Add to order")
 
 
-# Creating a global menu to dynamically update menu template and get useful information.
+# Creating a global menu to dynamically update menu template with jinja and get useful information.
 MENU = {"pepperonicheese": {"small":8.00, "medium":12.00, "large":13.50, "text": "Pepperoni Pizza", "description": "Mary's take at the staple pepperoni and pizza favorite! Experience this perfectly seasoned masterpiece for yourself!"},
         "breakfastpizza": {"small":7.50, "medium":11.50, "large":14.00, "text": "Breakfast Pizza", "description": "It's always breakfast time when you're hungry! Try out this delicious breakfast pizza with hardboiled egg slices as a topping!"},
         "vegetarianpizza": {"small":9.00, "medium":13.00, "large":16.00, "text": "Vegetarian Pizza", "description": "No menu would be complete without a delicious vegetarian meal! Try this carefully crafted recepie today!"},

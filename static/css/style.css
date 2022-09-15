@@ -57,11 +57,23 @@ h1{
 }
 
 .itemform{ 
-    width:40%;
+    max-width:40%;
     text-align:center;
     float:right;
     margin-right:5%;
     font-size: 25px;
+    font-size: 2vw;
+}
+
+#item-title{
+    font-size: 25px;
+    font-size: 2vw;
+    font-weight:bold;
+}
+
+#order-button{
+    font-size: 25px;
+    font-size: 1.5vw;
 }
 
 #logo{

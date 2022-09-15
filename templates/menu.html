@@ -7,11 +7,10 @@
             <img class=itemimage src="static/images/{{item}}.jpg">
             <div class="itemform">
                 <br/>
-                <h4>{{ MENU[item].text }}</h4>
-                <br/>
+                <h4 id="item-title">{{ MENU[item].text }}</h4>
                 <p>{{ MENU[item].description }}</p>
                 <br/>
-                {{ order.submit(class="btn btn-secondary") }}
+                {{ order.submit(class="btn btn-secondary", id="order-button") }}
             </div>
         </div>
     {% endfor %}
