@@ -4,11 +4,10 @@
 <br/>
     <form method="POST" action="/menu" id="order">
     {% for item in MENU %}
-        <div class="shadow p-3 mb-5 bg-body rounded">
+        <div class="shadow p-3 mb-5 bg-body rounded" id="menubox">
             <img class=itemimage src="static/images/{{item}}.jpg">
             <div class="itemform">
                 <h4 id="item-title">{{ MENU[item].text }}</h4>
-                <br/>
                 <p id="description">{{ MENU[item].description }}</p>
                 <div id="order-div">
                     <select name="{{item}}size" id="pizza-size", form="order">
