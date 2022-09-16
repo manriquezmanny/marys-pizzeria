@@ -83,6 +83,7 @@ def menu():
                     return redirect(url_for("menu"))
                 else:
                     ORDER.append([item, size])
+                    flash(f"Succesfully added a {size.title()} {MENU[item]['text'][:-6]} to order, click Checkout on top right when ready!")
                     print(ORDER)
         return redirect(url_for("menu"))
 
