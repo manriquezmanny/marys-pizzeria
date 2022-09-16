@@ -2,17 +2,26 @@
 
 {% block content %}
 <br/>
+    <form method="POST" action="/menu" id="order">
     {% for item in MENU %}
         <div class="shadow p-3 mb-5 bg-body rounded">
             <img class=itemimage src="static/images/{{item}}.jpg">
             <div class="itemform">
-                <br/>
                 <h4 id="item-title">{{ MENU[item].text }}</h4>
-                <p>{{ MENU[item].description }}</p>
                 <br/>
-                {{ order.submit(class="btn btn-secondary", id="order-button") }}
+                <p id="description">{{ MENU[item].description }}</p>
+                <div id="order-div">
+                    <select name="{{item}}size" id="pizza-size", form="order">
+                        <option value="NONE" selected hidden>Select Size</option>
+                        <option value="small">Small +$0.00</option>
+                        <option value="medium">Medium +$2.00</option>
+                        <option value="large">Large +$4.00</option>
+                    </select>
+                    <input type="submit" class="btn btn-secondary" id="order-button" value="Add to order" name="{{ item }}">
+                </div>
             </div>
         </div>
     {% endfor %}
+    </form>
 
 {% endblock %}

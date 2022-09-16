@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, flash, redirect, url_for
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, IntegerField, SelectField
 from wtforms.validators import DataRequired
@@ -53,15 +53,11 @@ class LoginForm(FlaskForm):
     password = PasswordField("Password:", validators=[DataRequired()])
     submit = SubmitField("Login")
 
-class AddToOrder(FlaskForm):
-    submit = SubmitField("Add to order")
-
-
 # Creating a global menu to dynamically update menu template with jinja and get useful information.
-MENU = {"pepperonicheese": {"small":8.00, "medium":12.00, "large":13.50, "text": "Pepperoni Pizza", "description": "Mary's take at the staple pepperoni and pizza favorite! Experience this perfectly seasoned masterpiece for yourself!"},
-        "breakfastpizza": {"small":7.50, "medium":11.50, "large":14.00, "text": "Breakfast Pizza", "description": "It's always breakfast time when you're hungry! Try out this delicious breakfast pizza with hardboiled egg slices as a topping!"},
-        "vegetarianpizza": {"small":9.00, "medium":13.00, "large":16.00, "text": "Vegetarian Pizza", "description": "No menu would be complete without a delicious vegetarian meal! Try this carefully crafted recepie today!"},
-        "combopizza": {"small":8.50, "medium":12.50, "large":15.50, "text": "Combo Veggie Pizza", "description": "Need a little bit of everything? This combo pizza will surely satisfy any and all cravings! No meat and no compromises!"}
+MENU = {"pepperonicheese": {"price":8.00, "text": "Pepperoni Pizza $8.00", "description": "Mary's take at the staple pepperoni and pizza favorite! Experience this perfectly seasoned masterpiece for yourself!"},
+        "breakfastpizza": {"price":7.50, "text": "Breakfast Pizza $7.50", "description": "It's always breakfast time when you're hungry! Try out this delicious breakfast pizza with hardboiled egg slices as a topping!"},
+        "vegetarianpizza": {"price":9.00, "text": "Vegetarian Pizza $9.00", "description": "No menu would be complete without a delicious vegetarian meal! Try this carefully crafted recepie today!"},
+        "combopizza": {"price":8.50, "text": "Combo Veggie Pizza $8.50", "description": "Need a little bit of everything? This combo pizza will surely satisfy any and all cravings! No meat and no compromises!"}
 }
 
 # Creating a Global dictionary that will be used to add items to order as dicts and then push the data to transactions database.
@@ -73,10 +69,22 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/menu")
+@app.route("/menu", methods=["GET", "POST"])
 def menu():
-    order = AddToOrder()
-    return render_template("menu.html", MENU=MENU, order=order)
+    if request.method == "GET":
+        return render_template("menu.html", MENU=MENU)
+    else:
+        for item in MENU:
+            if request.form.get(item):
+                size = request.form[item+"size"]
+                if size == "NONE":
+                    flash("Please Select Pizza Size!")
+                    print(ORDER)
+                    return redirect(url_for("menu"))
+                else:
+                    ORDER.append([item, size])
+                    print(ORDER)
+        return redirect(url_for("menu"))
 
 
 @app.route("/checkout")
@@ -99,3 +107,4 @@ def login():
 @app.route("/rewards")
 def rewards():
     return render_template("rewards.html")
+

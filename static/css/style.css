@@ -60,9 +60,10 @@ h1{
     max-width:40%;
     text-align:center;
     float:right;
-    margin-right:5%;
+    margin:2.5%;
     font-size: 25px;
     font-size: 2vw;
+    resize:both;
 }
 
 #item-title{
@@ -71,9 +72,28 @@ h1{
     font-weight:bold;
 }
 
-#order-button{
-    font-size: 25px;
+#pizza-size{
+    font-size: 20px;
     font-size: 1.5vw;
+    float:left;
+    max-width:45%;
+    margin:2.5%;
+}
+
+#order-button{
+    float:left;
+    font-size: 25px;
+    font-size: 1.2vw;
+    max-width:45%;
+    margin:2.5%;
+    resize:both;
+}
+
+#order-div{
+
+    margin-left:20%;
+    margin-right:auto;
+    resize:both;
 }
 
 #logo{
