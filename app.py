@@ -79,18 +79,35 @@ def menu():
                 size = request.form[item+"size"]
                 if size == "NONE":
                     flash("Please Select Pizza Size!")
-                    print(ORDER)
                     return redirect(url_for("menu"))
                 else:
-                    ORDER.append([item, size])
+                    ORDER.append([item, size, str(MENU[item]["price"])])
                     flash(f"Succesfully added a {size.title()} {MENU[item]['text'][:-6]} to order, click Checkout on top right when ready!")
-                    print(ORDER)
         return redirect(url_for("menu"))
 
 
 @app.route("/checkout")
 def checkout():
-    return render_template("checkout.html")
+    total_price = 0.0
+    for item in ORDER:
+        if item[1] == "medium":
+            item[2] = float(item[2]) + 2.00
+            item[1] = item[1].title()
+            total_price += item[2]
+            item[2] = str(item[2])
+        elif item[1] == "large":
+            item[2] = float(item[2]) + 4.00
+            item[1] = item[1].title()
+            total_price += item[2]
+            item[2] = str(item[2])
+        else:
+            item[1] = item[1].title()
+            item[2] = float(item[2])
+            print(item[2])
+            total_price += float(item[2])
+            item[2] = str(item[2])
+
+    return render_template("checkout.html", ORDER=ORDER, MENU=MENU, TOTAL="$"+str(total_price))
 
 
 @app.route("/register", methods=["GET", "POST"])

@@ -1,5 +1,35 @@
 {% extends "template.html" %}
 
 {% block content %}
-
+    {% if ORDER == None %}
+        <div class="order_contents">
+            <h3>No items in Order.</h3>
+            <p><a href="url_for('menu')">Click Here</a> to add items to order!</p>
+        </div>
+    {% else %}
+        <div class="order_contents">
+            <table>
+                <thead>
+                    <tr>
+                        <td>Size</td>
+                        <td>Item</td>
+                        <td>Price</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in ORDER %}
+                    <tr>
+                        <td>{{ item[1] }}</td>
+                        <td>{{ MENU[item[0]]["text"][:-6] }}</td>
+                        <td>{{ item[2] }}</td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td colspan="2"></td>
+                        <td>Total: {{ TOTAL }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
 {% endblock %}
