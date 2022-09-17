@@ -94,6 +94,13 @@ h1{
     resize:both;
 }
 
+#remove-button{
+    font-size: 20px;
+    font-size: 1.2vw;
+    margin-left:auto;
+    resize:both;
+}
+
 #order-div{
 
     margin-left:20%;

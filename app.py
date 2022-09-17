@@ -5,6 +5,7 @@ from wtforms.validators import DataRequired
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from dotenv import load_dotenv
+import copy
 import os
 
 
@@ -62,6 +63,9 @@ MENU = {"pepperonicheese": {"price":8.00, "text": "Pepperoni Pizza $8.00", "desc
 
 # Creating a Global dictionary that will be used to add items to order as dicts and then push the data to transactions database.
 ORDER = []
+total_price = 0.0
+item_number = 1
+
 
 
 @app.route("/")
@@ -86,34 +90,50 @@ def menu():
         return redirect(url_for("menu"))
 
 
-@app.route("/checkout")
+def remove(item_id):
+    global total_price
+    order_copy = copy.copy(ORDER)
+    for i in range(len(order_copy)):
+        if order_copy[i][3] == item_id:
+            total_price -= float(ORDER[i][2])
+            ORDER.remove(ORDER[i])
+
+
+@app.route("/checkout", methods=["GET", "POST"])
 def checkout():
-    total_price = 0.0
-    item_number = 1
-    for item in ORDER:
-        if item[1] == "medium":
-            item[2] = float(item[2]) + 2.00
-            item[1] = item[1].title()
-            total_price += item[2]
-            item[2] = str(item[2])
-            item.append(item_number)
-            item_number += 1
-        elif item[1] == "large":
-            item[2] = float(item[2]) + 4.00
-            item[1] = item[1].title()
-            total_price += item[2]
-            item[2] = str(item[2])
-            item.append(item_number)
-            item_number += 1
-        elif item[1] == "small":
-            item[1] = item[1].title()
-            item[2] = float(item[2])
-            total_price += float(item[2])
-            item[2] = str(item[2])
-            item.append(item_number)
-            item_number += 1
-    item_number = 1
-    return render_template("checkout.html", ORDER=ORDER, MENU=MENU, TOTAL="$"+str(total_price))
+    global total_price
+    global item_number
+    if request.method == "GET":
+        for item in ORDER:
+            if item[1] == "medium":
+                item[2] = float(item[2]) + 2.00
+                item[1] = item[1].title()
+                total_price += item[2]
+                item[2] = str(item[2])
+                item.append(item_number)
+                item_number += 1
+            elif item[1] == "large":
+                item[2] = float(item[2]) + 4.00
+                item[1] = item[1].title()
+                total_price += item[2]
+                item[2] = str(item[2])
+                item.append(item_number)
+                item_number += 1
+            elif item[1] == "small":
+                item[1] = item[1].title()
+                item[2] = float(item[2])
+                total_price += float(item[2])
+                item[2] = str(item[2])
+                item.append(item_number)
+                item_number += 1
+        return render_template("checkout.html", ORDER=ORDER, MENU=MENU, TOTAL="$"+str(total_price)+"0")
+    else:
+        item_id = int(request.form.get("item_id"))
+        print(ORDER)
+        remove(item_id)
+        print(ORDER)
+        return redirect(url_for("checkout"))
+
 
 
 @app.route("/register", methods=["GET", "POST"])
