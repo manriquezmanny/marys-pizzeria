@@ -2,29 +2,33 @@
 
 {% block content %}
     {% if ORDER == [] %}
-        <div class="order_contents">
-            <h3>No items in Order.</h3>
-            <p><a href="{{url_for('menu')}}">Click Here</a> to add items to order!</p>
+    <br/>
+        <div class="shadow p-3 mb-5 bg-body rounded" id="your-order">
+            <h3 id="your-order" style="text-align:center;">You have no items in your Order</h3>
+            <p style="text-align:center;"><a href="{{url_for('menu')}}">Click Here</a> to add items!</p>
         </div>
     {% else %}
-        <div class="order_contents">
-            <table>
+        <br/>
+        <h1 style="text-align:center; font-family:Brush Script MT;">Your Order:</h1>
+        <div id="your-order" class="shadow p-3 mb-5 bg-body rounded">
+            <table class="table">
                 <thead>
                     <tr>
-                        <td>Size</td>
-                        <td>Item</td>
-                        <td>Price</td>
+                        <td scope="col">Size</td>
+                        <td scope="col">Item</td>
+                        <td scope="col">Price</td>
+                        <td scope="col"></td>
                     </tr>
                 </thead>
                 <tbody>
                     <form method="POST" action="{{ url_for('checkout') }}">
                     {% for item in ORDER %}
                     <tr>
-                        <td>{{ item[1] }}</td>
+                        <td scope="row">{{ item[1] }}</td>
                         <td>{{ MENU[item[0]]["text"][:-6] }}</td>
                         <td>{{ item[2] }}</td>
                         <td>
-                            <button name="item_id" type="submit" value="{{ item[3] }}" class="btn btn-secondary" id="remove-button">Remove Item</button>
+                            <button name="item_id" type="submit" value="{{ item[3] }}" class="btn btn-danger" id="remove-button">Remove Item</button>
                         </td>
                     </tr>
                     {% endfor %}
@@ -32,6 +36,11 @@
                     <tr>
                         <td colspan="2"></td>
                         <td>Total: {{ TOTAL }}</td>
+                        <td>
+                            <form action="{{ url_for('order') }}">
+                                <input type="submit" class="btn btn-success" id="remove-button" value="Order for Pickup">
+                            </form>
+                        </td>
                     </tr>
                 </tbody>
             </table>
